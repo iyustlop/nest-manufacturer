@@ -3,11 +3,7 @@ import { ManufacturerService } from './manufacturer.service';
 
 @Controller('manufacturer')
 export class ManufacturerController {
-    manufacturerService: ManufacturerService;
-
-    constructor(manufacturerService: ManufacturerService) {
-        this.manufacturerService = manufacturerService;
-    }
+    constructor(private manufacturerService: ManufacturerService) {}
 
     @Get()
     getAllManufacturer() {
