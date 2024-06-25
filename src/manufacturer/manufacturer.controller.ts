@@ -10,6 +10,7 @@ export class ManufacturerController {
 
   @Post()
   create(@Body() createManufacturerDto: CreateManufacturerDto) {
+    console.log(createManufacturerDto);
     return this.manufacturerService.create(createManufacturerDto);
   }
 

@@ -23,6 +23,7 @@ export class ManufacturerService {
   ]
 
   create(createManufacturerDto: CreateManufacturerDto) {
+    this.manufacturers.push(createManufacturerDto);
     return 'This action adds a new manufacturer';
   }
 
