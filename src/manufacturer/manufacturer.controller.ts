@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res } from '@nestjs/common';
 import { ManufacturerService } from './manufacturer.service';
 import { CreateManufacturerDto } from './dto/create-manufacturer.dto';
 import { UpdateManufacturerDto } from './dto/update-manufacturer.dto';
+import { Response, Request } from 'express';
 
 @Controller('manufacturer')
 export class ManufacturerController {
-  constructor(private readonly manufacturerService: ManufacturerService) {}
+  constructor(private readonly manufacturerService: ManufacturerService) { }
 
   @Post()
   create(@Body() createManufacturerDto: CreateManufacturerDto) {
@@ -13,8 +14,9 @@ export class ManufacturerController {
   }
 
   @Get()
-  findAll() {
-    return this.manufacturerService.findAll();
+  findAll(@Req() request: Request, @Res() response: Response) {
+    console.log(request.url);
+    response.status(200).json(this.manufacturerService.findAll());
   }
 
   @Get(':id')
