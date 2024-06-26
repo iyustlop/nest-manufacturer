@@ -26,7 +26,6 @@ export class ManufacturerController {
 
   @Get()
   findAll(@Req() request: Request, @Res() response: Response) {
-    console.log(request.url);
     response.status(200).json(this.manufacturerService.findAll());
   }
 
