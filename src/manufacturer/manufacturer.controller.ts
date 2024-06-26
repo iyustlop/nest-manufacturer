@@ -25,8 +25,9 @@ export class ManufacturerController {
   }
 
   @Get()
-  findAll(@Req() request: Request, @Res() response: Response) {
-    response.status(200).json(this.manufacturerService.findAll());
+  async findAll(@Req() request: Request, @Res() response: Response) {
+    const result = await this.manufacturerService.findAll();
+    return response.status(200).json(result);
   }
 
   @Get(':id')
