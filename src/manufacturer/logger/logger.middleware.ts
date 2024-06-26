@@ -6,7 +6,9 @@ export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void) {
     if (req.method === 'GET') console.log('middleware: ' + req.originalUrl);
     if (req.method === 'POST')
-      console.log('middleware: ' + req.originalUrl + ' body: ' + req.body);
+      console.log(
+        'middleware: ' + req.originalUrl + ' body: ' + JSON.stringify(req.body),
+      );
     next();
   }
 }
