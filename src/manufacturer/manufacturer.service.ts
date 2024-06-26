@@ -1,37 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateManufacturerDto } from './dto/create-manufacturer.dto';
 import { UpdateManufacturerDto } from './dto/update-manufacturer.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class ManufacturerService {
-  private manufacturers = [
-    {
-      id: 1,
-      manufacturer: 'Ferrari',
-      location: 'Modena',
-    },
-    {
-      id: 2,
-      manufacturer: 'Porsche',
-      location: 'Stuttgart',
-    },
-    {
-      id: 3,
-      manufacturer: 'Maserati',
-      location: 'Modena',
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
   create(createManufacturerDto: CreateManufacturerDto) {
-    this.manufacturers.push({
-      id: this.manufacturers.length + 1,
-      ...createManufacturerDto,
-    });
-    return createManufacturerDto;
+    return this.prisma.manufacturer.create({ data: createManufacturerDto });
   }
 
   findAll() {
-    return this.manufacturers;
+    return this.prisma.manufacturer.findMany();
   }
 
   findOne(id: number) {
