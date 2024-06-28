@@ -1,8 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { CreateRegisterDto } from './dto/create-register.dto';
 
 import * as bcryptjs from 'bcryptjs';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +33,18 @@ export class AuthService {
     });
   }
 
-  login() {
-    return 'login';
+  async login({ email, password }: LoginDto) {
+    const user = await this.usersService.findOneByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('email is wrong');
+    }
+
+    const isPasswordValid = await bcryptjs.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('password is wrong');
+    }
+
+    return 'user';
   }
 }
