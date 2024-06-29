@@ -25,15 +25,13 @@ export class AuthService {
     if (user) {
       throw new BadRequestException('user already exists');
     }
-    const { name, email, password } = createRegisterDto;
-
-    const rol = 'user';
+    const { name, email, password, role } = createRegisterDto;
 
     return await this.usersService.create({
       name,
       email,
       password: await bcryptjs.hash(password, 10),
-      rol,
+      role,
     });
   }
 
@@ -49,10 +47,14 @@ export class AuthService {
       throw new UnauthorizedException('password is wrong');
     }
 
-    const payload = { email: user.email };
+    const payload = { email: user.email, role: user.role };
 
     const token = await this.jwtService.signAsync(payload);
 
     return { token, email };
+  }
+
+  async profile({ email, role }: { email: string; role: string }) {
+    return await this.usersService.findOneByEmail(email);
   }
 }

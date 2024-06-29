@@ -13,5 +13,5 @@ export class CreateUserDto {
   name: string;
   @IsString()
   @ApiProperty()
-  rol: string;
+  role: string;
 }
